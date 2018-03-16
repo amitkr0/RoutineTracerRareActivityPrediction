@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center"
+    android:layout_margin="10dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_place_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/dialog_timePickerIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="InTime" />
+
+
+    <EditText
+        android:id="@+id/dialog_timePickerOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="OutTIme"
+        android:textSize="16dp" />
+
+
+    <RadioGroup
+        android:id="@+id/dialog_radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="gravity">
+
+        <RadioButton
+            android:id="@+id/dialog_normal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:checked="false"
+            android:text="Normal"
+            android:textSize="16dp" />
+
+        <RadioButton
+            android:id="@+id/dialog_seminormal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:checked="false"
+            android:text="Semi-Normal"
+            android:textSize="16dp" />
+
+        <RadioButton
+            android:id="@+id/dialog_abnormal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:checked="false"
+            android:text="AbNormal"
+            android:textSize="16dp" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/dialog_save_marker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:enabled="false"
+            android:text="Save"
+            android:textSize="16dp" />
+
+        <Button
+            android:id="@+id/dialog_remove_marker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+</LinearLayout>
