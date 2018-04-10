@@ -1,4 +1,5 @@
 package minorproject.knowmyself.Service;
+/*
 
 
 import android.app.AlarmManager;
@@ -50,4 +51,4 @@ public class JobSchedulerService extends JobService  {
         return false;
     }
 
-}
+}*/

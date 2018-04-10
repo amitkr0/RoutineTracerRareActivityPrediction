@@ -15,9 +15,6 @@ import com.android.volley.toolbox.Volley;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by rohitkr2997 on 2/16/18.
- */
 
 public class SendtoServer {
 
@@ -27,8 +24,6 @@ public class SendtoServer {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
-                Toast.makeText(context, "dfdsfsd" + response, Toast.LENGTH_SHORT).show();
                 Log.i("My success", "" + response);
 
             }

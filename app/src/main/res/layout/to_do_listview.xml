@@ -1,30 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<android.support.v7.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
     <TextView
         android:id="@+id/task_title"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="Hello"
-        android:textSize="25sp"
+        android:defaultFocusHighlightEnabled="true"
+        android:paddingBottom="0.2dp"
+        android:paddingLeft="5dp"
+        android:textColor="#202060"
+        android:textSize="30sp"
+        android:fontFamily="monospace"
+        android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/task_details"
+        android:layout_width="match_parent"
+        android:paddingLeft="6.3dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="25sp"
+        android:layout_marginLeft="12dp"
+        android:paddingTop="4dp"
+        android:backgroundTint="#80000000"
+        android:layout_below="@+id/task_title"
         android:textStyle="bold"
-        android:typeface="sans"
         android:paddingBottom="0.2dp"
         android:defaultFocusHighlightEnabled="true"
-        android:fontFamily="@string/cast_notification_connecting_message"
-        android:background="@color/cardview_light_background"
+        android:fontFamily="cursive"
+        android:textColor="#330011"
+        android:layout_marginBottom="5dp"
         />
-</android.support.v7.widget.CardView>
 
-
+    <ImageButton
+        android:foregroundGravity="center"
+        android:layout_marginTop="25dp"
+        android:id="@+id/delete_button"
+        android:layout_width="40dp"
+        android:layout_height="match_parent"
+        android:layout_alignRight="@+id/task_title"
+        android:src="@drawable/ic_delete_black_24dp"
+        android:paddingBottom="0.2dp"
+        android:background="#ffff66"/>
     <!--<ImageButton-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->

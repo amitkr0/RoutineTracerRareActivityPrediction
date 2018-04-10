@@ -44,7 +44,6 @@ public class Starter extends AppCompatActivity {
         else {
             Intent accountsIntent = new Intent(Starter.this, HomePage.class);
             startActivity(accountsIntent);
-            Log.d("conty", "hii");
         }
 
     }

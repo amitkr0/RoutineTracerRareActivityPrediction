@@ -138,7 +138,6 @@ public class MapsMarkerActivity extends AppCompatActivity
         fab_cur_loc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MapsMarkerActivity.this,"Ohh shitt",Toast.LENGTH_SHORT).show();
                 if (ActivityCompat.checkSelfPermission(MapsMarkerActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     // TODO: Consider calling
                     boolean hasPermissionLocation = (ContextCompat.checkSelfPermission(MapsMarkerActivity.this,
@@ -154,7 +153,7 @@ public class MapsMarkerActivity extends AppCompatActivity
                     //                                          int[] grantResults)
                     // to handle the case where the user grants the permission. See the documentation
                     // for ActivityCompat#requestPermissions for more details.
-                    Toast.makeText(MapsMarkerActivity.this,"Not getting",Toast.LENGTH_LONG).show();
+
                     return;
                 }
                 locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);

@@ -1,8 +1,6 @@
 package minorproject.knowmyself.Service;
 
-/**
- * Created by rohitkr2997 on 2/18/18.
- */
+
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;

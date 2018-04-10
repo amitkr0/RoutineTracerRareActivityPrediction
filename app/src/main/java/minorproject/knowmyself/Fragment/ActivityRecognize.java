@@ -95,11 +95,9 @@ public class ActivityRecognize extends Fragment {
         imgActivity = getActivity().findViewById(R.id.img_activity);
         btnStartTrcking = getActivity().findViewById(R.id.btn_start_tracking);
         btnStopTracking = getActivity().findViewById(R.id.btn_stop_tracking);
-        Toast.makeText(getContext(),"hi",Toast.LENGTH_SHORT).show();
         btnStartTrcking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(),"hi",Toast.LENGTH_SHORT).show();
                 startTracking();
             }
         });

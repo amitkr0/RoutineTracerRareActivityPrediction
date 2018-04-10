@@ -1,7 +1,6 @@
 package minorproject.knowmyself.Database;
 
 
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -9,34 +8,39 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
+import minorproject.knowmyself.Other.ToDoBean;
 
 public class ToDoDBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "ToDoList.db";
-    public static final String CONTACTS_TABLE_NAME = "ToDo";
-    public static final String CONTACTS_COLUMN_USERID = "userid";
-    public static final String CONTACTS_COLUMN_NAME = "activity";
-    public static final String CONTACTS_COLUMN_DATE = "date";
-    public static final String CONTACTS_COLUMN_STARTTIME = "starttime";
-    public static final String CONTACTS_COLUMN_ENDTIME = "endtime";
-    public static final String CONTACTS_COLUMN_LOCATION = "location";
+    public static final String TODO_TABLE_NAME = "ToDo";
+    public static final String TODO_COLUMN_NAME = "event";
+    public static final String TODO_COLUMN_DATE = "date";
+    public static final String TODO_COLUMN_STARTTIME = "starttime";
+    public static final String TODO_COLUMN_ENDTIME = "endtime";
+    public static final String TODO_COLUMN_LOCATION = "location";
     private HashMap hp;
+    private Context context;
 
     public ToDoDBHelper(Context context) {
         super(context, DATABASE_NAME , null, 1);
+        this.context=context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
         db.execSQL(
-                "create table ToDo(userid text,activity text,date text,starttime text,endtime text,location text)"
+                "create table ToDo(event text,date text,starttime text,endtime text,location text)"
         );
     }
 
@@ -47,56 +51,67 @@ public class ToDoDBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertToDo (String userid, String activity, String date, String starttime,String endtime,String location) {
+    public boolean insertToDo (String event, String date, String starttime,String endtime,String location) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("userid", userid);
-        contentValues.put("activity",activity);
+        contentValues.put("event",event);
         contentValues.put("date",date);
         contentValues.put("starttime", starttime);
         contentValues.put("endtime",endtime);
         contentValues.put("location",location);
         db.insert("ToDo", null, contentValues);
+        Toast.makeText(context,"inserted here", Toast.LENGTH_SHORT).show();
         return true;
     }
 
-    public Cursor getData(String id) {
+    public List<ToDoBean> getData() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from ToDo where id="+id+"", null );
-        return res;
+        Cursor res =  db.rawQuery( "select * from ToDo", null );
+        List<ToDoBean> list = new ArrayList<>();
+        while (res.moveToNext()) {
+            String event = res.getString(0);
+            String date = res.getString(1);
+            String inTime = res.getString(2);
+            String outTime = res.getString(3);
+            String location = res.getString(4);
+            ToDoBean toDoBean = new ToDoBean(event,date,inTime,outTime,location);
+            list.add(toDoBean);
+        }
+        return list;
     }
 
     public int numberOfRows(){
         SQLiteDatabase db = this.getReadableDatabase();
-        int numRows = (int) DatabaseUtils.queryNumEntries(db, CONTACTS_TABLE_NAME);
+        int numRows = (int) DatabaseUtils.queryNumEntries(db, TODO_TABLE_NAME);
         return numRows;
     }
 
-    public Integer deleteToDo (String activity) {
+    public boolean deleteToDo (String activity) {
+        Toast.makeText(context,"inside detlete",Toast.LENGTH_SHORT).show();
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete("ToDo",
-                "name = ? ",
+        Log.v("abcd","a      "+ db+"      p");
+       /* return db.delete("ToDo",
+                "event = ? ",
                 new String[] { activity });
+        Log.v("abcd","reached here"+activity);*/
+        return db.delete(TODO_TABLE_NAME, TODO_COLUMN_NAME + "= '" + activity+"';", null) > 0;
     }
 
     public ArrayList<String> getToDoList() {
-        System.out.println("ml ja yaar");
         ArrayList<String> array_list = new ArrayList<String>();
-        System.out.println("inside getall");
-        //hp = new HashMap();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "select * from ToDo", null );
         res.moveToFirst();
 
         while(res.isAfterLast() == false){
-            array_list.add(res.getString(res.getColumnIndex(CONTACTS_COLUMN_NAME)));
+            array_list.add(res.getString(res.getColumnIndex(TODO_COLUMN_NAME)));
             res.moveToNext();
         }
         return array_list;
     }
     public JSONArray getResults() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String searchQuery = "SELECT * FROM ToDo";//todo change contacy
+        String searchQuery = "SELECT * FROM ToDo";
         Cursor cursor = db.rawQuery(searchQuery, null);
 
         JSONArray resultSet = new JSONArray();

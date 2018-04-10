@@ -4,15 +4,11 @@ package minorproject.knowmyself.Activity;
 
 import minorproject.knowmyself.Database.LoginDBHelper;
 import minorproject.knowmyself.Other.InputValidation;
-import minorproject.knowmyself.Service.JobSchedulerService;
 import minorproject.knowmyself.Other.UserSessionManager;
 import minorproject.knowmyself.R;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -59,7 +55,6 @@ public class LoginActivity extends AppCompatActivity {
     private Button _loginButton;
     private TextView _signupLink;
     private TextInputLayout textInputLayoutEmail;
-    private JobScheduler mJobScheduler;
     @SuppressLint("WrongConstant")
    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override

@@ -45,11 +45,11 @@ public class SensorService extends Service implements LocationListener{
 
     protected LocationManager locationManager;
     protected String YES_ACTION="YES_ACTION",
-            MAYBE_ACTION="NO_ACTION",
+            MAYBE_ACTION="MAYBE_ACTION",
             NO_ACTION="NO_ACTION";
     private static final float ROTATION_THRESHOLD = 2.0f;
     private static final int ROTATION_WAIT_TIME_MS = 100;
-    private static final double DISTANCE_THRESHOLD = 250.0;
+    private static final double DISTANCE_THRESHOLD = 200.0;   //TODO
     private SensorManager sensorManager;
     private boolean isColor = false;
     private long lastUpdate;
@@ -125,7 +125,6 @@ public class SensorService extends Service implements LocationListener{
 
                 if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
                     mGravity = event.values;
-//                    Log.d("SENSORR","acceleromter");
                     getAccelerometer(event);
                 }
                 else
@@ -134,7 +133,6 @@ public class SensorService extends Service implements LocationListener{
 
 
                 if (event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
-//                    Log.d("SENSORR","gyroscope");
                     detectRotation(event);
                 }
                 else
@@ -142,7 +140,6 @@ public class SensorService extends Service implements LocationListener{
 //                            Toast.LENGTH_SHORT).show();
 
                 if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
-//                    Log.d("SENSORR","compass");
                     mGeomagnetic = event.values;
                 }
                 else
@@ -176,7 +173,6 @@ public class SensorService extends Service implements LocationListener{
 
         }
 
-//        Toast.makeText(this,"notification  here",Toast.LENGTH_SHORT).show();
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
 
         notificationBuilder.setAutoCancel(true)
@@ -197,16 +193,23 @@ public class SensorService extends Service implements LocationListener{
 
         Intent maybeReceive = new Intent(this,NotificationService.class);
         maybeReceive.setAction(MAYBE_ACTION);
-        yesReceive.putExtra("ID",uniqueID);
+        maybeReceive.putExtra("ID",uniqueID);
         PendingIntent pendingIntentMaybe = PendingIntent.getBroadcast(this, 12345, maybeReceive, PendingIntent.FLAG_UPDATE_CURRENT);
-        notificationBuilder.addAction(R.drawable.ic_action_seminormal, "Rare", pendingIntentMaybe);
+        notificationBuilder.addAction(R.drawable.ic_action_seminormal, "Semi", pendingIntentMaybe);
 
         //No intent
         Intent noReceive = new Intent(this,NotificationService.class);
         noReceive.setAction(NO_ACTION);
-        yesReceive.putExtra("ID",uniqueID);
+        noReceive.putExtra("ID",uniqueID);
+
         PendingIntent pendingIntentNo = PendingIntent.getBroadcast(this, 12345, noReceive, PendingIntent.FLAG_UPDATE_CURRENT);
-        notificationBuilder.addAction(R.drawable.ic_action_semi, "Semi-normal", pendingIntentNo);
+        notificationBuilder.addAction(R.drawable.ic_action_semi, "Rare", pendingIntentNo);
+
+        //TodO
+        double pastLat = Double.parseDouble(sharedPreferences.getString("PREVLAT",""));
+        double pastLong = Double.parseDouble(sharedPreferences.getString("PREVLONG",""));
+
+        Toast.makeText(getApplicationContext(),"latitude  --  "+pastLat+"  \n longitude --  "+pastLong,Toast.LENGTH_LONG);
         notificationManager.notify(/*notification id*/101, notificationBuilder.build());
 
     }
@@ -346,7 +349,7 @@ public class SensorService extends Service implements LocationListener{
             location = locationManager.getLastKnownLocation(providerName);
 
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,  this);
 
         //ToDo -- to get speed
         LocationListener locationListener = new LocationListener() {
@@ -403,7 +406,6 @@ public class SensorService extends Service implements LocationListener{
                     }
                 }, 2000);
 
-//                Toast.makeText(getApplicationContext(), "After startAllJob function ", Toast.LENGTH_SHORT).show();
                 sensor.setAccX(ACC_X);
                 sensor.setAccY(ACC_Y);
                 sensor.setAccZ(ACC_Z);
@@ -414,12 +416,9 @@ public class SensorService extends Service implements LocationListener{
                 sensor.setMag2(MAG_2);
                 sensor.setMag3(MAG_3);
                 sensor.setResponse(null);
-                //ToDo -- to save in database
 
-//                Toast.makeText(getApplicationContext(), "Reaching last of add service", Toast.LENGTH_SHORT).show();
                 servicesDBHelper.addServices(sensor);
                 addNotification();
-//                sensorManager.unregisterListener(sensorEventListener);
             }
         }
         else

@@ -3,6 +3,7 @@ package minorproject.knowmyself.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import minorproject.knowmyself.Adapter.CustomToDoAdapter;
 import minorproject.knowmyself.Database.ToDoDBHelper;
+import minorproject.knowmyself.Other.ToDoBean;
 import minorproject.knowmyself.R;
 
 
@@ -36,7 +40,7 @@ public class ToDo extends Fragment {
     private String mParam2;
     private ListView mTaskListView;
     private ToDoDBHelper mydb;
-    private ArrayAdapter<String> mAdapter;
+//    private CustomToDoAdapter mAdapter;
 
 
     private OnFragmentInteractionListener mListener;
@@ -82,6 +86,7 @@ public class ToDo extends Fragment {
             mListener.onFragmentInteraction("To Do");
         }
 
+
       updateUI(view);
 
 
@@ -94,39 +99,41 @@ public class ToDo extends Fragment {
 
         // or
         ListView listView = getActivity().findViewById(R.id.list_todo);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+       /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                     String s=adapterView.getItemAtPosition(i).toString();
                     deleteTask(s);
 
             }
-        });
+        });*/
     }
 
-    private void updateUI(View view) {//
 
+    public void updateUI(View view) {
         mTaskListView =(ListView) view.findViewById(R.id.list_todo);
+        List<ToDoBean> list = new ToDoDBHelper(getContext()).getData();
 
-        ArrayList<String> taskList;
-        mydb = new ToDoDBHelper(getContext());
-        taskList=mydb.getToDoList();
-        if (mAdapter == null) {
-            mAdapter = new ArrayAdapter<String>(getContext(),R.layout.to_do_listview,R.id.task_title,taskList);
+        CustomToDoAdapter customToDoAdapter = new CustomToDoAdapter(getContext(),R.layout.to_do_listview,list);
+        mTaskListView.setAdapter(customToDoAdapter);
+
+
+        /*if (mAdapter == null) {
+            mAdapter = new CustomToDoAdapter(getContext(),R.layout.to_do_listview,list);
             mTaskListView.setAdapter(mAdapter);
-            System.out.println("yahan hoon"+mTaskListView+" "+mAdapter);
-            Toast.makeText(getActivity(),"hello",Toast.LENGTH_LONG).show();
         } else {
             mAdapter.clear();
             mAdapter.addAll(taskList);
             mAdapter.notifyDataSetChanged();
-        }
+        }*/
 
     }
     public void deleteTask(String task) {
-        mydb = new ToDoDBHelper(getContext());//todo
-        mydb.deleteToDo(task);
-        updateUI(getView());
+        /*mydb = new ToDoDBHelper(getContext());//todo
+        Log.v("abcd",""+mydb+"   u  "+task);*/
+        //mydb.deleteToDo(task);
+        Toast.makeText(getContext(),"hitodod",Toast.LENGTH_SHORT).show();
+        //updateUI(getView());
     }
 
     // TODO: Rename method, update argument and hook method into UI event

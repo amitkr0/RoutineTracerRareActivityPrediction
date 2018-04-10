@@ -3,16 +3,12 @@ package minorproject.knowmyself.Activity;
 // import files
 import minorproject.knowmyself.Database.LoginDBHelper;
 import minorproject.knowmyself.Other.InputValidation;
-import minorproject.knowmyself.Service.JobSchedulerService;
 import minorproject.knowmyself.Other.UserSessionManager;
 import minorproject.knowmyself.R;
 import minorproject.knowmyself.Other.UserProfile;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,7 +39,6 @@ public class SignupActivity extends AppCompatActivity {
     protected ScrollView nestedScrollView;
     protected TextInputLayout textInputLayoutEmail;
     protected TextInputLayout textInputLayoutPassword;
-    private JobScheduler mJobScheduler;
     EditText _nameText;
     EditText _emailText;
     EditText _guardemailText;
@@ -119,14 +114,7 @@ public class SignupActivity extends AppCompatActivity {
         String uniqueID = UUID.randomUUID().toString();
         AddUser(uniqueID);
         session.createUserLoginSession(uniqueID,_emailText.getText().toString().trim(),_passwordText.getText().toString().trim());
-//        // Timer work starts
-//        mJobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-//        JobInfo.Builder builder = new JobInfo.Builder(1,
-//                new ComponentName(getPackageName(), JobSchedulerService.class.getName()));
-//        builder.setPeriodic(10000);
-//        if (mJobScheduler.schedule(builder.build()) <= 0) {
-//            Toast.makeText(getApplicationContext(), "Problem in scheduling", Toast.LENGTH_LONG).show();
-//        }
+
         Intent accountsIntent = new Intent(getApplicationContext(), MapsMarkerActivity.class);//Todo
 
         accountsIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

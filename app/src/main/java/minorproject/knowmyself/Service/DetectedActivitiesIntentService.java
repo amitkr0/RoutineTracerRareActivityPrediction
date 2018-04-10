@@ -1,8 +1,6 @@
 package minorproject.knowmyself.Service;
 
-/**
- * Created by rohitkr2997 on 2/18/18.
- */
+
 import android.app.IntentService;
 import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
